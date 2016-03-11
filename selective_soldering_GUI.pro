@@ -18,7 +18,10 @@ SOURCES += main.cpp\
     modbus/modbus-data.c \
     modbus/modbus-rtu.c \
     modbus/modbus-tcp.c \
-    modbus/modbus.c
+    modbus/modbus.c \
+    inspectionCamera.cpp \
+    csvparser/csvparser.c \
+    fileParser.c
 
 HEADERS  += mainwindow.h \
     modbus/config.h \
@@ -29,6 +32,13 @@ HEADERS  += mainwindow.h \
     modbus/modbus-tcp.h \
     modbus/modbus-version.h \
     modbus/modbus.h \
-    motorController.h
+    motorController.h \
+    csvparser/csvparser.h \
+    fileParser.h \
+    inspectionCamera.h
+
+INCLUDEPATH += /usr/local/include/opencv
+LIBS += -L/usr/local/lib -lopencv_core -lopencv_features2d -lopencv_imgcodecs -lopencv_highgui -lopencv_videoio -lopencv_imgproc
+`LIBS += pkg-config --libs opencv`
 
 FORMS    += mainwindow.ui
