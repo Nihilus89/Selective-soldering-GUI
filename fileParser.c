@@ -29,21 +29,24 @@ int getCoordinatesfromFile(char* filename, int* componentSum, int* fiducialSum, 
         char **rowFields = CsvParser_getFields(row);
         designator = rowFields[DESIGNATOR_COLUMN];
 
-        if(regExMatcher(designator) == 1) // Component
+        if(!regExMatcher(designator)) // Fiducial
+        {
+            fiducials[fIndex][0] = (float) atof(rowFields[X_COLUMN]); // Center-x
+            fiducials[fIndex][1] = (float) atof(rowFields[Y_COLUMN]); // Center-y
+            printf("F: x:%f y:%f\n", fiducials[fIndex][0], fiducials[fIndex][1]);
+            fIndex++;
+        }
+
+
+        else // Component
         {
             coordinates[cIndex][0] = (float) atof(rowFields[X_COLUMN]); // Center-x
             coordinates[cIndex][1] = (float) atof(rowFields[Y_COLUMN]); // Center-y
-            //printf("x:%f y:%f\n", coordinates[cIndex][0], coordinates[cIndex][1]);
+            printf("C: x:%f y:%f\n", coordinates[cIndex][0], coordinates[cIndex][1]);
             cIndex++;
 
         }
 
-        else if(regExMatcher(designator) == 2)
-        {
-            fiducials[fIndex][0] = (float) atof(rowFields[X_COLUMN]); // Center-x
-            fiducials[fIndex][1] = (float) atof(rowFields[Y_COLUMN]); // Center-y
-            fIndex++;
-        }
 
         CsvParser_destroy_row(row);
     }
@@ -52,26 +55,25 @@ int getCoordinatesfromFile(char* filename, int* componentSum, int* fiducialSum, 
     *componentSum = cIndex;
     *fiducialSum = fIndex;
     CsvParser_destroy(csvparser); // destroy the parser
+
+    return 0;
 }
 
 
 
 int regExMatcher(char* designator) {
 
-    regex_t componentExp,fiducialExp;
+    regex_t fiducialExp;
     int retval;
 
-    regcomp(&componentExp, "[C][0-9]", 0);
     regcomp(&fiducialExp, "[FID][0-9]", 0);
 
-    if(!regexec(&componentExp, designator, 0, NULL, 0))
+
+    if (regexec(&fiducialExp, designator, 0, NULL, 0))
         retval = 1;
-    else if (!regexec(&fiducialExp, designator, 0, NULL, 0))
-        retval = 2;
     else
         retval = 0;
 
-    regfree(&componentExp);
     regfree(&fiducialExp);
 
     return retval;
