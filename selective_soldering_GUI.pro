@@ -13,8 +13,22 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    motorController.cpp \
+    modbus/modbus-data.c \
+    modbus/modbus-rtu.c \
+    modbus/modbus-tcp.c \
+    modbus/modbus.c
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    modbus/config.h \
+    modbus/modbus-private.h \
+    modbus/modbus-rtu-private.h \
+    modbus/modbus-rtu.h \
+    modbus/modbus-tcp-private.h \
+    modbus/modbus-tcp.h \
+    modbus/modbus-version.h \
+    modbus/modbus.h \
+    motorController.h
 
 FORMS    += mainwindow.ui
