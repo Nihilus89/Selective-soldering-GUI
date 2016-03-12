@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mat2qimage.h"
 #include "fileParser.h"
 #include <QFileDialog>
 #include <iostream>
@@ -21,7 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    Mat src = webcam.captureImage(30);
+    QImage qImage = Mat2QImage(src);
+    QPixmap pixmap = QPixmap::fromImage(qImage);
+    ui->cameraImage->clear();
+    ui->cameraImage->setPixmap(pixmap.scaled(QSize(481,331)));
 
 }
 

@@ -11,12 +11,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = selective_soldering_GUI
 TEMPLATE = app
 
+ICON = selective_soldering_GUI.icns
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     csvparser/csvparser.c \
     fileParser.c \
     motorController.cpp \
     inspectionCamera.cpp \
+    mat2qimage.cpp\
 
 
 HEADERS  += mainwindow.h \
@@ -24,6 +27,7 @@ HEADERS  += mainwindow.h \
     fileParser.h \
     motorController.h \
     inspectionCamera.h \
+    mat2qimage.h \
 
 INCLUDEPATH += /usr/local/include/modbus
 LIBS += -L/usr/local/lib -lmodbus
