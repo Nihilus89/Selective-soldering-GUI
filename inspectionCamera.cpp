@@ -7,6 +7,7 @@
 
 inspectionCamera::inspectionCamera(int dev) {
     devNum = dev;
+    fiducialIndex = 0;
 
 }
 
@@ -17,10 +18,8 @@ Mat inspectionCamera::captureImage(int focus) {
     if(!stream.isOpened())
         cout << "Cannot open video camera";
     else {
-
         // Disable autofocus and set a manual value
         //system("v4l2-ctl -d 0 -c focus_auto=0");
-
         // Convert the focus to string and append to the system command
         string focusCommand = "v4l2-ctl -d 0 -c focus_absolute=", result;
         ostringstream number;
@@ -76,10 +75,14 @@ int inspectionCamera::locateFiducial(Mat src, float target_x, float target_y, in
     double alpha = 0.5; // transparency
     addWeighted(color, alpha, roi, 1.0 - alpha, 0.0, roi);
 
-    if(numCircles == 1)
+    if(numCircles == 1){
+        emit found(target_x);
         return 0;
-    else
+    }
+    else {
+        emit notFound();
         return 1;
+    }
 
 }
 

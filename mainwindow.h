@@ -27,6 +27,12 @@ private slots:
 
     void on_loadFileButton_clicked();
 
+    void fiducialFound(float);
+
+    void fiducialNotFound();
+
+    void on_locateFiducialButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
