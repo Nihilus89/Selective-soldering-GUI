@@ -21,10 +21,13 @@
 using namespace cv;
 using namespace std;
 
+const long double PI = 3.141592653589793238L;
+
 class inspectionCamera : public QObject {
     Q_OBJECT
 public:
     float fiducial_x, fiducial_y, fiducial_r;
+    float degrees, offset_x, offset_y;
     int numCircles, fiducialIndex;
 
     inspectionCamera(int); // constructor

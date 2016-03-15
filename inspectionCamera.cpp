@@ -89,7 +89,7 @@ int inspectionCamera::locateFiducial(Mat src, float target_x, float target_y, in
 
 void inspectionCamera::coordinatesTranslation(float correctFiducial[][2], float currentFiducial[][2], float coordinates[][2], int numFiducial, int numComp) {
 
-    Mat correctMatrix, currentMatrix, R, t;
+    Mat correctMatrix, currentMatrix, A2, B, err, temp, R, t;
     correctMatrix = Mat(numFiducial, 2, CV_32F, correctFiducial);
     currentMatrix = Mat(numFiducial, 2, CV_32F, currentFiducial);
 
@@ -105,8 +105,8 @@ void inspectionCamera::coordinatesTranslation(float correctFiducial[][2], float 
     coordinates_tr = (R*trans) + repeat(t, 1, numComp);
     transpose(coordinates_tr, trans);
 
-    cout << "coordinates_or = "<< endl << " "  << coordinates_or << endl << endl;
-    cout << "coordinates_tr = "<< endl << " "  << trans << endl << endl;
+    //cout << "coordinates_or = "<< endl << " "  << coordinates_or << endl << endl;
+    //cout << "coordinates_tr = "<< endl << " "  << trans << endl << endl;
 
     for(int i=0; i<numComp; i++)
     {
@@ -114,7 +114,11 @@ void inspectionCamera::coordinatesTranslation(float correctFiducial[][2], float 
         coordinates[i][1] = trans.at<float>(i,1);
     }
 
-
+    float rotation = R.at<float>(0,0);
+    float radians = acos(rotation);
+    degrees = (radians * 180) / PI;
+    offset_x = t.at<float>(0,0);
+    offset_y = t.at<float>(1,0);
 }
 
 

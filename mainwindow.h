@@ -33,6 +33,11 @@ private slots:
 
     void on_locateFiducialButton_clicked();
 
+    void translateCoordinates();
+
+signals:
+    void translateCoordinatesSignal();
+
 private:
     Ui::MainWindow *ui;
 
