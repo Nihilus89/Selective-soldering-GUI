@@ -1,3 +1,5 @@
+// Check alignment: ./Desktop/dispROI /Users/Vassilis/Documents/PnP.csv
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "mat2qimage.h"
@@ -10,7 +12,7 @@
 #define MB_STOPBITS 1
 #define MB_PARITY 'N'
 
-motorController topTable("/dev/tty.usbmodem1411", MB_BITRATE, MB_PARITY, MB_DATABITS, MB_STOPBITS,1);
+motorController topTable("/dev/tty.usbmodem1D1131", MB_BITRATE, MB_PARITY, MB_DATABITS, MB_STOPBITS,1);
 inspectionCamera webcam(0);
 
 char* filename;
@@ -58,7 +60,7 @@ void MainWindow::on_startMotorsButton_clicked()
 {
     ui->startMotorsButton->setEnabled(false);
         topTable.initController();
-        topTable.motorsOn(true);
+        topTable.motorsOn(1);
 }
 
 void MainWindow::on_browseFilesButton_clicked()
